@@ -1,0 +1,54 @@
+[tool.ruff]
+target-version = "py312"
+
+line-length = 120
+format.preview = true
+format.docstring-code-line-length = 120
+format.docstring-code-format = true
+lint.extend-select = [
+  "A",
+  "B",
+  "C4",
+  "D",
+  "FLY",
+  "FURB",
+  "I",
+  "NPY",
+  "PERF",
+  "PIE",
+  "PTH",
+  "RUF",
+  "SIM",
+  "T10",
+  "TCH",
+  "UP",
+  "YTT",
+]
+lint.ignore = [
+  "A004", # Overwriting builtins can be intended
+  "B007", # It can be intended to name loop variables even if they are not used
+  "B023", # Leads to a lot of false alarms
+  "B027", # It is totally valid to prepare more methods in an abstract class without forcing them to be abstract
+  "C408", # We still want to use the dict(key=value) syntax
+  # pydocstyle has a lot of irrelevant checks by default. We are mainly interested in D417 (checks for missing arguments)
+  "D1",
+  "D200",
+  "D202",
+  "D205",
+  "D212",
+  "D400",
+  "D401",
+  "D402",
+  "D415",
+  "E731",    # Assigning lambdas to variables can be cleaner
+  "E741",    # Usually not an issue
+  "F841",    # Does not detect df.query usage
+  "PERF401", # May lead to too complex code
+  "RUF001",  # Explicitly intended
+  "RUF003",  # Same
+  "RUF013",  # Produces unnecessary complexity
+  "UP031",   # % formatting can be easier with JS string code
+]
+lint.unfixable = [ "B905" ] # We don't want strict=False but strict=True
+
+lint.pydocstyle.convention = "google"
