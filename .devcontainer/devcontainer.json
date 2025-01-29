@@ -1,0 +1,12 @@
+{
+    "name": "integral image development",
+    "image": "integral_image",
+    "initializeCommand": "docker build --file .devcontainer/Dockerfile --network host --tag integral_image .",
+    "runArgs": ["--name", "integral_image", "--gpus", "all"],
+    "postStartCommand": "pre-commit install",
+    "customizations": {
+        "vscode": {
+            "extensions": ["GitHub.copilot", "ms-vscode.cpptools-extension-pack", "ms-python.python", "ms-toolsai.jupyter"]
+        }
+    }
+}
