@@ -6,7 +6,12 @@
     "postStartCommand": "pre-commit install",
     "customizations": {
         "vscode": {
-            "extensions": ["GitHub.copilot", "ms-vscode.cpptools-extension-pack", "ms-python.python", "ms-toolsai.jupyter"]
+            "extensions": [
+                "GitHub.copilot",
+                "ms-vscode.cpptools-extension-pack",
+                "ms-python.python",
+                "ms-toolsai.jupyter"
+            ]
         }
     }
 }
