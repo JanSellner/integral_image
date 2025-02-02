@@ -1,7 +1,7 @@
 #include "ParallelExecution.h"
 #include "integral_image.h"
 
-cv::Mat parallel_version(cv::Mat image) {
+cv::Mat parallel_version(const cv::Mat& image) {
     auto height = image.rows;
     auto width = image.cols;
     cv::Mat result(height, width, CV_32SC1);
@@ -42,7 +42,7 @@ cv::Mat parallel_version(cv::Mat image) {
     return result;
 }
 
-cv::Mat parallel_version2(cv::Mat image) {
+cv::Mat parallel_version2(const cv::Mat& image) {
     auto height = image.rows;
     auto width = image.cols;
     cv::Mat result(height, width, CV_32SC1);

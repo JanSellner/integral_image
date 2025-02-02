@@ -11,7 +11,7 @@
  * @param image The single-channel uint8 input image for which the integral image should be computed.
  * @return The integral image with the same dimensions as the input image but with int32 dtype.
  */
-inline cv::Mat opencv_version(cv::Mat image) {
+inline cv::Mat opencv_version(const cv::Mat& image) {
     cv::Mat result;
     cv::integral(image, result);
 
@@ -25,7 +25,7 @@ inline cv::Mat opencv_version(cv::Mat image) {
  *
  * @copydetails opencv_version()
  */
-cv::Mat serial_version(cv::Mat image);
+cv::Mat serial_version(const cv::Mat& image);
 
 /**
  * @brief Computes the integral image of the input image using a parallel algorithm.
@@ -35,7 +35,7 @@ cv::Mat serial_version(cv::Mat image);
  *
  * @copydetails opencv_version()
  */
-cv::Mat parallel_version(cv::Mat image);
+cv::Mat parallel_version(const cv::Mat& image);
 
 /**
  * @brief Computes the integral image of the input image using a parallel algorithm.
@@ -45,7 +45,7 @@ cv::Mat parallel_version(cv::Mat image);
  *
  * @copydetails opencv_version()
  */
-cv::Mat parallel_version2(cv::Mat image);
+cv::Mat parallel_version2(const cv::Mat& image);
 
 /**
  * @brief Computes the integral image of the input image using using torch.
@@ -54,4 +54,4 @@ cv::Mat parallel_version2(cv::Mat image);
  *
  * @copydetails opencv_version()
  */
-cv::Mat torch_version(cv::Mat image);
+cv::Mat torch_version(const cv::Mat& image);
