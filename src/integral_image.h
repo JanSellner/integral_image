@@ -1,6 +1,7 @@
 #pragma once
 
 #include <opencv2/opencv.hpp>
+#include "CudaMat.cuh"
 
 /**
  * @brief Computes the integral image of the input image using OpenCV.
@@ -55,3 +56,14 @@ cv::Mat parallel_version2(const cv::Mat& image);
  * @copydetails opencv_version()
  */
 cv::Mat torch_version(const cv::Mat& image);
+
+/**
+ * @brief Computes the integral image of the input image using using cuda.
+ *
+ * The data passed to this function must already be on the GPU.
+ *
+ * @param image The single-channel uint8 input image for which the integral image should be computed.
+ * @param result The output where the integral image should be stored. Must have same dimensions as the input image but
+ * with int32 dtype.
+ */
+void cuda_version(const CudaMat& image, CudaMat& result);

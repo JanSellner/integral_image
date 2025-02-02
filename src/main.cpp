@@ -20,32 +20,50 @@ int main(int argc, char** argv) {
 
     cv::resize(image, image, cv::Size(), scaling_factor, scaling_factor);
 
-    std::function<cv::Mat(cv::Mat)> func;
-    if (std::string(argv[2]) == "serial") {
-        func = serial_version;
-    } else if (std::string(argv[2]) == "parallel") {
-        func = parallel_version;
-    } else if (std::string(argv[2]) == "parallel2") {
-        func = parallel_version2;
-    } else if (std::string(argv[2]) == "opencv") {
-        func = opencv_version;
-    } else if (std::string(argv[2]) == "torch") {
-        func = torch_version;
+    std::chrono::steady_clock::time_point begin;
+    std::chrono::steady_clock::time_point end;
+    if (std::string(argv[2]) == "cuda") {
+        CudaMat image_cuda(image);
+        CudaMat result(image.rows, image.cols, CV_32SC1);
+
+        // Warmup
+        for (int i = 0; i < n_warmup; i++) {
+            cuda_version(image_cuda, result);
+        }
+
+        begin = std::chrono::steady_clock::now();
+        for (int i = 0; i < n_repeats; i++) {
+            cuda_version(image_cuda, result);
+        }
+        end = std::chrono::steady_clock::now();
     } else {
-        std::cerr << "Invalid run type: " << argv[2] << std::endl;
-        exit(2);
-    }
+        std::function<cv::Mat(const cv::Mat&)> func;
+        if (std::string(argv[2]) == "serial") {
+            func = serial_version;
+        } else if (std::string(argv[2]) == "parallel") {
+            func = parallel_version;
+        } else if (std::string(argv[2]) == "parallel2") {
+            func = parallel_version2;
+        } else if (std::string(argv[2]) == "opencv") {
+            func = opencv_version;
+        } else if (std::string(argv[2]) == "torch") {
+            func = torch_version;
+        } else {
+            std::cerr << "Invalid run type: " << argv[2] << std::endl;
+            exit(2);
+        }
 
-    // Warmup
-    for (int i = 0; i < n_warmup; i++) {
-        result = func(image);
-    }
+        // Warmup
+        for (int i = 0; i < n_warmup; i++) {
+            result = func(image);
+        }
 
-    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-    for (int i = 0; i < n_repeats; i++) {
-        result = func(image);
+        begin = std::chrono::steady_clock::now();
+        for (int i = 0; i < n_repeats; i++) {
+            result = func(image);
+        }
+        end = std::chrono::steady_clock::now();
     }
-    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
     // Pass the results back to the caller
     std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
