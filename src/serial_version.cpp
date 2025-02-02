@@ -7,12 +7,12 @@ cv::Mat serial_version(const cv::Mat& image) {
     std::vector<int> col_sums(width, 0);
 
     // We iterate only once over the image and keep track of the current cumulative sum across rows for each column
-    for (int i = 0; i < height; i++) {
+    for (int row = 0; row < height; row++) {
         int current_sum = 0;
-        for (int j = 0; j < width; j++) {
-            col_sums[j] += image.at<uchar>(i, j);
-            result.at<int>(i, j) = current_sum + col_sums[j];
-            current_sum = result.at<int>(i, j);
+        for (int col = 0; col < width; col++) {
+            col_sums[col] += image.at<uchar>(row, col);
+            result.at<int>(row, col) = current_sum + col_sums[col];
+            current_sum = result.at<int>(row, col);
         }
     }
 

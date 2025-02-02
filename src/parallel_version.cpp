@@ -8,11 +8,11 @@ cv::Mat parallel_version(const cv::Mat& image) {
 
     // Cumsum across columns for each row in parallel
     ParallelExecution pe;
-    pe.parallel_for(0, height - 1, [&](const size_t i) {
+    pe.parallel_for(0, height - 1, [&](const size_t row) {
         int current_sum = 0;
-        for (int j = 0; j < width; j++) {
-            current_sum += image.at<uchar>(i, j);
-            result.at<int>(i, j) = current_sum;
+        for (int col = 0; col < width; col++) {
+            current_sum += image.at<uchar>(row, col);
+            result.at<int>(row, col) = current_sum;
         }
     });
 
@@ -32,9 +32,9 @@ cv::Mat parallel_version(const cv::Mat& image) {
             block_end = width;
         }
 
-        for (int i = 1; i < height; i++) {
-            for (int j = block_start; j < block_end; j++) {
-                result.at<int>(i, j) = result.at<int>(i, j) + result.at<int>(i - 1, j);
+        for (int row = 1; row < height; row++) {
+            for (int col = block_start; col < block_end; col++) {
+                result.at<int>(row, col) += result.at<int>(row - 1, col);
             }
         }
     });
@@ -48,20 +48,20 @@ cv::Mat parallel_version2(const cv::Mat& image) {
     cv::Mat result(height, width, CV_32SC1);
 
     ParallelExecution pe;
-    pe.parallel_for(0, height - 1, [&](const size_t i) {
+    pe.parallel_for(0, height - 1, [&](const size_t row) {
         int current_sum = 0;
-        for (int j = 0; j < width; j++) {
-            current_sum += image.at<uchar>(i, j);
-            result.at<int>(i, j) = current_sum;
+        for (int col = 0; col < width; col++) {
+            current_sum += image.at<uchar>(row, col);
+            result.at<int>(row, col) = current_sum;
         }
     });
 
     // Simple, but may be inefficient due to many cache misses
-    pe.parallel_for(0, width - 1, [&](const size_t j) {
+    pe.parallel_for(0, width - 1, [&](const size_t col) {
         int current_sum = 0;
-        for (int i = 0; i < height; i++) {
-            current_sum += result.at<int>(i, j);
-            result.at<int>(i, j) = current_sum;
+        for (int row = 0; row < height; row++) {
+            current_sum += result.at<int>(row, col);
+            result.at<int>(row, col) = current_sum;
         }
     });
 

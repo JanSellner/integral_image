@@ -66,7 +66,8 @@ int main(int argc, char** argv) {
     }
 
     // Pass the results back to the caller
-    std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+    std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /
+                     static_cast<float>(n_repeats);
 
     return 0;
 }

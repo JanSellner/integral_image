@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     n_repeats = 10
     scalings = [4, 6, 8]
-    algorithms = ["serial", "parallel", "parallel2", "opencv", "torch"]
+    algorithms = ["serial", "parallel", "parallel2", "opencv", "torch", "cuda"]
 
     # Perform the benchmark
     with Progress(auto_refresh=False) as progress:
@@ -33,7 +33,7 @@ if __name__ == "__main__":
                         cwd=script_dir.parent / "build",
                         stdout=subprocess.PIPE,
                     )
-                    times.append(int(res.stdout.decode()))
+                    times.append(float(res.stdout.decode()))
 
                 results.append({
                     "scale": scale,
