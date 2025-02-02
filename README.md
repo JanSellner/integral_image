@@ -13,7 +13,7 @@ At every location $(x, y)$, the integral image $I_{\int}(x, y)$ contains the sum
 -   A second parallel version to highlight the importance of cache locality in the parallel version.
 -   The vectorized version [`cv::integral()`](https://docs.opencv.org/4.x/d7/d1b/group__imgproc__misc.html#ga97b87bec26908237e8ba0f6e96d23e28) of OpenCV.
 -   A torch version simply doing `x.cumsum(0).cumsum(1)`.
--   A CUDA version similar to the parallel version with one thread operating over each row/column
+-   A CUDA version similar to the parallel version with one thread operating over each row/column.
 
 ## Setup
 
