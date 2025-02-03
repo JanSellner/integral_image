@@ -32,7 +32,7 @@ void cuda_version(const CudaMat& image, CudaMat& result) {
     auto height = image.rows;
     auto width = image.cols;
 
-    // Similar to parallel_version2 but with one thread for each row/column
+    // Similar to parallel_naive_version but with one thread for each row/column
     int threads = 64;
     int blocks = (height + threads - 1) / threads;
     integral_image_rows<<<blocks, threads>>>(image.ptr<uchar>(), result.ptr<int>(), height, width);

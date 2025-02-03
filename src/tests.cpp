@@ -6,7 +6,7 @@ bool _mat_equal(const cv::Mat& mat1, const cv::Mat& mat2) {
 }
 
 void test_cpu_functions(const std::vector<cv::Mat>& inputs, const std::vector<cv::Mat>& targets) {
-    auto functions = {serial_version, parallel_version, parallel_version2, opencv_version, torch_version};
+    auto functions = {serial_version, parallel_cache_version, parallel_naive_version, opencv_version, torch_version};
 
     for (size_t i = 0; i < inputs.size(); i++) {
         cv::Mat image = inputs[i];

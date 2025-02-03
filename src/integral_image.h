@@ -36,17 +36,17 @@ cv::Mat serial_version(const cv::Mat& image);
  *
  * @copydetails opencv_version()
  */
-cv::Mat parallel_version(const cv::Mat& image);
+cv::Mat parallel_cache_version(const cv::Mat& image);
 
 /**
  * @brief Computes the integral image of the input image using a parallel algorithm.
  *
- * Compared to parallel_version(), this version parallelizes the second iteration so that first the sum over over a row
- * is computed instead of first finishing the sums for one row. This has worse cache locality.
+ * Compared to parallel_cache_version(), this version parallelizes the second iteration so that first the sum over over
+ * a row is computed instead of first finishing the sums for one row. This has worse cache locality.
  *
  * @copydetails opencv_version()
  */
-cv::Mat parallel_version2(const cv::Mat& image);
+cv::Mat parallel_naive_version(const cv::Mat& image);
 
 /**
  * @brief Computes the integral image of the input image using using torch.

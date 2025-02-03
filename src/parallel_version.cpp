@@ -1,7 +1,7 @@
 #include "ParallelExecution.h"
 #include "integral_image.h"
 
-cv::Mat parallel_version(const cv::Mat& image) {
+cv::Mat parallel_cache_version(const cv::Mat& image) {
     auto height = image.rows;
     auto width = image.cols;
     cv::Mat result(height, width, CV_32SC1);
@@ -18,9 +18,9 @@ cv::Mat parallel_version(const cv::Mat& image) {
 
     // The second iteration is much more difficult to parallelize because of cache misses
     // A straightforward approach would be to simply parallelize the iterations over the columns (cf.
-    // parallel_version2()) However, this has bad cache locality since every thread accesses the data from all rows. To
-    // avoid this, we parallelize the operations across one row by letting each tread operate on a sequence of values (a
-    // block)
+    // parallel_naive_version()) However, this has bad cache locality since every thread accesses the data from all
+    // rows. To avoid this, we parallelize the operations across one row by letting each tread operate on a sequence of
+    // values (a block)
 
     int n_blocks = pe.numbThreads;
     int block_size = std::ceil(static_cast<float>(width) / n_blocks);
@@ -42,7 +42,7 @@ cv::Mat parallel_version(const cv::Mat& image) {
     return result;
 }
 
-cv::Mat parallel_version2(const cv::Mat& image) {
+cv::Mat parallel_naive_version(const cv::Mat& image) {
     auto height = image.rows;
     auto width = image.cols;
     cv::Mat result(height, width, CV_32SC1);

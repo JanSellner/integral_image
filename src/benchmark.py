@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     n_repeats = 10
     scalings = [4, 6, 8]
-    algorithms = ["serial", "parallel", "parallel2", "opencv", "torch", "cuda"]
+    algorithms = ["serial", "parallel_cache", "parallel_naive", "opencv", "torch", "cuda"]
 
     # Perform the benchmark
     with Progress(auto_refresh=False) as progress:

@@ -4,7 +4,7 @@
 
 int main(int argc, char** argv) {
     if (argc != 3) {
-        std::cout << "Usage: " << argv[0] << " SCALE serial|parallel|parallel2|opencv|torch" << std::endl;
+        std::cout << "Usage: " << argv[0] << " SCALE serial|parallel_cache|parallel_naive|opencv|torch" << std::endl;
         return 1;
     }
 
@@ -40,10 +40,10 @@ int main(int argc, char** argv) {
         std::function<cv::Mat(const cv::Mat&)> func;
         if (std::string(argv[2]) == "serial") {
             func = serial_version;
-        } else if (std::string(argv[2]) == "parallel") {
-            func = parallel_version;
-        } else if (std::string(argv[2]) == "parallel2") {
-            func = parallel_version2;
+        } else if (std::string(argv[2]) == "parallel_cache") {
+            func = parallel_cache_version;
+        } else if (std::string(argv[2]) == "parallel_naive") {
+            func = parallel_naive_version;
         } else if (std::string(argv[2]) == "opencv") {
             func = opencv_version;
         } else if (std::string(argv[2]) == "torch") {

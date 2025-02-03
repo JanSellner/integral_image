@@ -10,7 +10,7 @@ if __name__ == "__main__":
     build_code(script_dir)
 
     # Compare cache misses for the two parallel algorithms
-    for algorithm in ["parallel", "parallel2"]:
+    for algorithm in ["parallel_cache", "parallel_naive"]:
         print(f"[bold magenta]Algorithm: {algorithm}[/bold magenta]")
 
         res = subprocess.run(

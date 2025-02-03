@@ -9,8 +9,8 @@ $$
 At every location $(x, y)$, the integral image $I_{\int}(x, y)$ contains the sum of values of the original image $I(i, j)$ spanned by the rectangle from the top left corner $(0, 0)$ to the point $(x, y)$. Focus of this project is on a comparison of serial and parallel algorithms and their efficiency. More specifically, the following algorithms are compared with each other:
 
 -   A serial version which iterates once over the image.
--   A parallel version which computes the cumulative row and column sums in parallel.
--   A second parallel version to highlight the importance of cache locality in the parallel version.
+-   A parallel version which computes the cumulative row and column sums in parallel (`parallel_cache`).
+-   A second parallel version to highlight the importance of cache locality in the parallel version (`parallel_naive`).
 -   The vectorized version [`cv::integral()`](https://docs.opencv.org/4.x/d7/d1b/group__imgproc__misc.html#ga97b87bec26908237e8ba0f6e96d23e28) of OpenCV.
 -   A torch version simply doing `x.cumsum(0).cumsum(1)`.
 -   A CUDA version similar to the parallel version with one thread operating over each row/column.
@@ -39,7 +39,7 @@ Inside the container, run the [`benchmark.py`](./src/benchmark.py) script to sta
 
 ## Cache Misses
 
-The two parallel algorithms have a different cache behavior. In general, there are more cache misses with `parallel2` than with `parallel`. This can be made explicit via the [cachegrind tool of valgrind](https://valgrind.org/docs/manual/cg-manual.html). Run the [`cache_misses.py`](./src/cache_misses.py) script to get the output of the tool for those two algorithms.
+The two parallel algorithms have a different cache behavior. In general, there are more cache misses with `parallel_naive` than with `parallel_cache`. This can be made explicit via the [cachegrind tool of valgrind](https://valgrind.org/docs/manual/cg-manual.html). Run the [`cache_misses.py`](./src/cache_misses.py) script to get the output of the tool for those two algorithms.
 
 ## Tests
 
